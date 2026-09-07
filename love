@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Love Virus 💜</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #050008;
+    color: #d8a7ff;
+    font-family: Arial, sans-serif;
+}
+
+/* QUESTION SCREEN */
+
+#questionScreen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background:
+        radial-gradient(circle, #260044 0%, #0b0012 45%, #020003 100%);
+}
+
+#questionScreen .heart {
+    font-size: 90px;
+    animation: heartbeat 1.2s infinite;
+    filter: drop-shadow(0 0 25px #a855f7);
+}
+
+h1 {
+    color: #e0b3ff;
+    text-shadow: 0 0 20px #8b2be2;
+}
+
+.question {
+    font-size: 30px;
+    margin: 15px;
+}
+
+.buttons {
+    display: flex;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+button {
+    padding: 14px 35px;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#yes {
+    background: #8b2be2;
+    color: white;
+    border: 2px solid #d8a7ff;
+    box-shadow: 0 0 25px #8b2be2;
+}
+
+#yes:hover {
+    transform: scale(1.1);
+}
+
+#no {
+    background: #100b14;
+    color: #aaa;
+    border: 2px solid #555;
+    position: relative;
+}
+
+/* LOVE SCREEN */
+
+#loveScreen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: black;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Random I LOVE YOU */
+
+.loveText {
+    position: absolute;
+    color: #b86cff;
+    font-weight: bold;
+    font-size: 14px;
+    opacity: 0;
+    animation: appear 1s forwards;
+    text-shadow:
+        0 0 5px #9d4edd,
+        0 0 15px #7b2cbf;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    to {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+}
+
+/* HEART */
+
+#heartContainer {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    max-width: 700px;
+    height: 500px;
+    pointer-events: none;
+}
+
+.heartWord {
+    position: absolute;
+    color: #d8a7ff;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow:
+        0 0 5px #c77dff,
+        0 0 12px #8b2be2;
+    animation: heartAppear 0.5s forwards;
+    opacity: 0;
+}
+
+@keyframes heartAppear {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* FINAL MESSAGE */
+
+#finalMessage {
+    position: absolute;
+    left: 50%;
+    bottom: 7%;
+    transform: translateX(-50%);
+    width: 100%;
+    opacity: 0;
+    animation: finalAppear 2s forwards;
+    animation-delay: 5s;
+}
+
+#finalMessage h2 {
+    margin: 0;
+    font-size: clamp(35px, 9vw, 75px);
+    color: white;
+    font-weight: 900;
+    text-shadow:
+        0 0 10px #d8a7ff,
+        0 0 30px #8b2be2,
+        0 0 60px #7b2cbf;
+}
+
+#finalMessage p {
+    color: #c77dff;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+@keyframes finalAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- QUESTION -->
+
+<div id="questionScreen">
+
+    <div class="heart">💜</div>
+
+    <h1>Do you love me?</h1>
+
+    <div class="buttons">
+
+        <button id="yes" onclick="startLove()">
+            YES 💜
+        </button>
+
+        <button id="no">
+            NO
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- LOVE VIRUS -->
+
+<div id="loveScreen">
+
+    <div id="heartContainer"></div>
+
+    <div id="finalMessage">
+
+        <h2>I LOVE YOU JASON</h2>
+
+        <p>
+            ♡ You are officially infected with my love ♡
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const no = document.getElementById("no");
+
+/* Make NO run away */
+
+function escapeNo() {
+
+    const maxX = window.innerWidth - no.offsetWidth - 20;
+    const maxY = window.innerHeight - no.offsetHeight - 20;
+
+    no.style.position = "fixed";
+    no.style.left = Math.random() * maxX + "px";
+    no.style.top = Math.random() * maxY + "px";
+}
+
+no.addEventListener("mouseover", escapeNo);
+no.addEventListener("touchstart", escapeNo);
+
+
+/* Start love virus */
+
+function startLove() {
+
+    document.getElementById("questionScreen").style.display = "none";
+
+    const loveScreen =
+        document.getElementById("loveScreen");
+
+    loveScreen.style.display = "block";
+
+    createHeart();
+
+    setTimeout(() => {
+        createLoveExplosion();
+    }, 1200);
+}
+
+
+/* Heart made from "I love you" */
+
+function createHeart() {
+
+    const container =
+        document.getElementById("heartContainer");
+
+    const centerX = 350;
+    const centerY = 220;
+
+    for (let i = 0; i < 170; i++) {
+
+        const t =
+            Math.PI * 2 * i / 170;
+
+        const x =
+            16 * Math.pow(Math.sin(t), 3);
+
+        const y =
+            -(13 * Math.cos(t)
+            - 5 * Math.cos(2*t)
+            - 2 * Math.cos(3*t)
+            - Math.cos(4*t));
+
+        const word =
+            document.createElement("span");
+
+        word.className = "heartWord";
+
+        word.innerHTML = "I love you";
+
+        word.style.left =
+            (centerX + x * 15) + "px";
+
+        word.style.top =
+            (centerY + y * 15) + "px";
+
+        word.style.animationDelay =
+            (i * 0.025) + "s";
+
+        container.appendChild(word);
+    }
+}
+
+
+/* Fill screen with I LOVE YOU */
+
+function createLoveExplosion() {
+
+    const screen =
+        document.getElementById("loveScreen");
+
+    for (let i = 0; i < 150; i++) {
+
+        const text =
+            document.createElement("div");
+
+        text.className = "loveText";
+
+        text.innerHTML = "I LOVE YOU";
+
+        text.style.left =
+            Math.random() * 100 + "vw";
+
+        text.style.top =
+            Math.random() * 100 + "vh";
+
+        text.style.fontSize =
+            (10 + Math.random() * 18) + "px";
+
+        text.style.animationDelay =
+            Math.random() * 3 + "s";
+
+        screen.appendChild(text);
+    }
+}
+
+</script>
+
+</body>
+</html>
